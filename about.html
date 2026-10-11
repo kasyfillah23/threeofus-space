@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | ThreeOfUs Space</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <header>
+        <div class="logo">ThreeOfUs<span>Space</span></div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="about.html" class="active">Tentang Kami</a></li>
+                <li><a href="contact.html">Kontak</a></li>
+            </ul>
+        </nav>
+        <button id="theme-toggle">🌙 Mode Gelap</button>
+    </header>
+
+    <main>
+        <section class="team-header">
+            <h1>Meet the crew behind the screen! 🚀</h1>
+            <p>Tiga kepala, jutaan baris kode, satu tujuan: bikin web impian jadi nyata.</p>
+        </section>
+
+        <!-- Profile 1: Afaan -->
+        <section class="member-card">
+            <img src="images/afan.jpg" alt="Foto Zharfan Kasy'fillah" class="profile-img">
+            <div class="member-info">
+                <h2>Zharfan Kasy'fillah</h2>
+                <p class="nim">NIM: 25091397156</p>
+                <p class="role">Project Lead & HTML Architect</p>
+                <p class="quote">"Money doesn't buy happiness. It buys crazy ass happiness."</p>
+                <div class="action-buttons">
+                    <button class="btn-detail" data-member="afaan">Detail Bio</button>
+                    <a href="https://www.instagram.com/zhrfky_/" target="_blank" class="btn-social">Instagram</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Profile 2: Adia -->
+        <section class="member-card reverse">
+            <img src="images/adia.jpg" alt="Foto Adia Dinara" class="profile-img">
+            <div class="member-info">
+                <h2>Adia Dinara Ivorynda Malik</h2>
+                <p class="nim">NIM: 25091397123</p>
+                <p class="role">UI/UX Specialist & CSS Stylist</p>
+                <p class="quote">"Design is intelligence made visible."</p>
+                <div class="action-buttons">
+                    <button class="btn-detail" data-member="adia">Detail Bio</button>
+                    <a href="https://www.instagram.com/dearlyiyv/" target="_blank" class="btn-social">Instagram</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Profile 3: Panji -->
+        <section class="member-card">
+            <img src="images/panji.jpg" alt="Foto Panji Elang" class="profile-img">
+            <div class="member-info">
+                <h2>Panji Elang Akhsani</h2>
+                <p class="nim">NIM: 25091397136</p>
+                <p class="role">JavaScript & Interactive Engineer</p>
+                <p class="quote">"Code is like humor. When you have to explain it, it’s bad."</p>
+                <div class="action-buttons">
+                    <button class="btn-detail" data-member="panji">Detail Bio</button>
+                    <a href="https://www.instagram.com/akhsani_panji/" target="_blank" class="btn-social">Instagram</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal Pop-up Detail Bio (Untuk JS DOM) -->
+    <div id="bio-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h3 id="modal-name">Nama Anggota</h3>
+            <p id="modal-nim">NIM</p>
+            <p id="modal-desc">Detail informasi bio...</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 ThreeOfUs Space | D4 Manajemen Informatika UNESA.</p>
+    </footer>
+</body>
+</html>
