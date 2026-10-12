@@ -1,15 +1,7 @@
-/* =========================================================
-   1. DARK / LIGHT MODE TOGGLE
-   ========================================================= */
-// Diterapkan langsung (sebelum DOM selesai) agar tidak berkedip.
-(function applySavedTheme() {
-  let theme = null;
-  try { theme = localStorage.getItem("theme"); } catch (e) {}
-  if (!theme) {
-    theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-  }
-  document.documentElement.setAttribute("data-theme", theme);
-})();
+/* ========================================
+   THREEOFUS SPACE
+   Interactive DOM & Event Handling
+   ======================================== */
 
 document.addEventListener("DOMContentLoaded", () => {
   initThemeToggle();
@@ -17,138 +9,158 @@ document.addEventListener("DOMContentLoaded", () => {
   initContactForm();
 });
 
+/* =========================================================
+   1. FITUR DARK / LIGHT MODE TOGGLE (GLOBAL)
+   ========================================================= */
 function initThemeToggle() {
-  const btn = document.getElementById("theme-toggle");
-  if (!btn) return;
+  const themeToggleBtn = document.getElementById("theme-toggle");
 
-  const root = document.documentElement;
+  // Cek preferensi tema yang tersimpan di localStorage atau system preference
+  const savedTheme = localStorage.getItem("theme");
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const isDark = savedTheme === "dark" || (!savedTheme && prefersDark);
+
+  if (isDark) {
+    document.body.classList.add("dark-mode");
+    document.documentElement.setAttribute("data-theme", "dark");
+  } else {
+    document.body.classList.remove("dark-mode");
+    document.documentElement.setAttribute("data-theme", "light");
+  }
+
   const updateLabel = () => {
-    btn.textContent = root.getAttribute("data-theme") === "dark" ? "☀️ Light" : "🌙 Dark";
+    if (!themeToggleBtn) return;
+    const activeDark = document.body.classList.contains("dark-mode");
+    themeToggleBtn.textContent = activeDark ? "☀️ Mode Terang" : "🌙 Mode Gelap";
   };
+
   updateLabel();
 
-  btn.addEventListener("click", () => {
-    const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
-    root.setAttribute("data-theme", next);
-    try { localStorage.setItem("theme", next); } catch (e) {}
-    updateLabel();
-  });
+  if (themeToggleBtn) {
+    themeToggleBtn.addEventListener("click", () => {
+      document.body.classList.toggle("dark-mode");
+      const activeDark = document.body.classList.contains("dark-mode");
+
+      document.documentElement.setAttribute("data-theme", activeDark ? "dark" : "light");
+      localStorage.setItem("theme", activeDark ? "dark" : "light");
+      updateLabel();
+    });
+  }
 }
 
 /* =========================================================
-   2. DOM MANIPULATION / MODAL DETAIL ANGGOTA TIM
+   2. FITUR MODAL POP-UP DETAIL BIO (HALAMAN ABOUT)
    ========================================================= */
-const teamMembers = [
-  { name: "Andi Pratama", role: "Frontend Developer", bio: "Suka membangun antarmuka yang rapi dan responsif.", email: "andi@example.com" },
-  { name: "Sinta Dewi", role: "UI/UX Designer", bio: "Fokus pada pengalaman pengguna dan desain yang konsisten.", email: "sinta@example.com" },
-  { name: "Budi Santoso", role: "Backend Developer", bio: "Mengurus API, database, dan keamanan sistem.", email: "budi@example.com" }
-];
-
 function initTeamModal() {
-  const overlay = document.getElementById("modal-overlay");
-  const buttons = document.querySelectorAll("[data-member]");
-  if (!overlay || buttons.length === 0) return;
+  const bioModal = document.getElementById("bio-modal");
+  const modalName = document.getElementById("modal-name");
+  const modalNim = document.getElementById("modal-nim");
+  const modalDesc = document.getElementById("modal-desc");
+  const closeBtn = document.querySelector(".close-btn");
+  const detailBtns = document.querySelectorAll(".btn-detail");
 
-  const closeBtn = overlay.querySelector(".modal-close");
-  const avatar = document.getElementById("modal-avatar");
-  const nameEl = document.getElementById("modal-name");
-  const roleEl = document.getElementById("modal-role");
-  const bioEl = document.getElementById("modal-bio");
-  const emailEl = document.getElementById("modal-email");
-  let lastFocused = null;
+  if (!bioModal || detailBtns.length === 0) return;
 
-  function openModal(index) {
-    const m = teamMembers[index];
-    if (!m) return;
-    avatar.textContent = m.name.charAt(0);
-    nameEl.textContent = m.name;
-    roleEl.textContent = m.role;
-    bioEl.textContent = m.bio;
-    emailEl.textContent = m.email;
-    emailEl.href = "mailto:" + m.email;
-    lastFocused = document.activeElement;
-    overlay.classList.add("open");
-    closeBtn.focus();
-  }
-
-  function closeModal() {
-    overlay.classList.remove("open");
-    if (lastFocused) lastFocused.focus();
-  }
-
-  buttons.forEach(btn => {
-    btn.addEventListener("click", () => openModal(Number(btn.dataset.member)));
-  });
-  closeBtn.addEventListener("click", closeModal);
-  overlay.addEventListener("click", e => {
-    if (e.target === overlay) closeModal(); // klik area gelap
-  });
-  document.addEventListener("keydown", e => {
-    if (e.key === "Escape" && overlay.classList.contains("open")) closeModal();
-  });
-}
-
-/* =========================================================
-   3. FORM VALIDATION (HALAMAN CONTACT)
-   ========================================================= */
-function initContactForm() {
-  const form = document.getElementById("contact-form");
-  if (!form) return;
-
-  const fields = {
-    name: form.elements["name"],
-    email: form.elements["email"],
-    message: form.elements["message"]
-  };
-  const successEl = document.getElementById("form-success");
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-
-  const validators = {
-    name: v => (v.trim() === "" ? "Nama wajib diisi." : ""),
-    email: v => {
-      if (v.trim() === "") return "Email wajib diisi.";
-      if (!emailRegex.test(v.trim())) return "Format email tidak valid.";
-      return "";
+  // Data biografi lengkap 3 anggota kelompok
+  const memberData = {
+    afaan: {
+      name: "Zharfan Kasy'fillah",
+      nim: "NIM: 25091397156",
+      desc: "Project Lead & HTML Architect di ThreeOfUs Space. Bertanggung jawab atas struktur semantik HTML5, arsitektur repositori GitHub, serta penyusunan dokumentasi teknis SRS. Berfokus pada penulisan kode yang rapi, accessible, dan memenuhi standar W3C."
     },
-    message: v => {
-      if (v.trim() === "") return "Pesan tidak boleh kosong.";
-      if (v.trim().length < 10) return "Pesan minimal 10 karakter.";
-      return "";
+    adia: {
+      name: "Adia Dinara Ivorynda Malik",
+      nim: "NIM: 25091397123",
+      desc: "UI/UX Specialist & CSS Stylist di ThreeOfUs Space. Ahli dalam merancang layout responsif berbasis Flexbox & Grid, CSS Variables, serta estetika Modern Space. Berfokus pada pengalaman pengguna yang intuitif dan visual antarmuka yang menarik."
+    },
+    panji: {
+      name: "Panji Elang Akhsani",
+      nim: "NIM: 25091397136",
+      desc: "JavaScript & Interactive Engineer di ThreeOfUs Space. Bertanggung jawab mengelola manipulasi DOM, event listener, validasi form, dan logika interaktif web client-side untuk menghidupkan antarmuka statis menjadi dinamis."
     }
   };
 
-  function validateField(key) {
-    const input = fields[key];
-    const error = validators[key](input.value);
-    const wrapper = input.closest(".field");
-    wrapper.classList.toggle("invalid", error !== "");
-    wrapper.querySelector(".error-msg").textContent = error;
-    return error === "";
-  }
+  const openModal = (memberKey) => {
+    const data = memberData[memberKey];
+    if (data) {
+      modalName.textContent = data.name;
+      modalNim.textContent = data.nim;
+      modalDesc.textContent = data.desc;
+      bioModal.classList.remove("hidden");
+    }
+  };
 
-  // Validasi saat user meninggalkan kolom, dan koreksi langsung saat mengetik
-  Object.keys(fields).forEach(key => {
-    fields[key].addEventListener("blur", () => validateField(key));
-    fields[key].addEventListener("input", () => {
-      if (fields[key].closest(".field").classList.contains("invalid")) validateField(key);
+  const closeModal = () => {
+    bioModal.classList.add("hidden");
+  };
+
+  detailBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const memberKey = btn.getAttribute("data-member");
+      openModal(memberKey);
     });
   });
 
-  form.addEventListener("submit", e => {
+  if (closeBtn) {
+    closeBtn.addEventListener("click", closeModal);
+  }
+
+  // Tutup modal jika area di luar kotak modal diklik
+  bioModal.addEventListener("click", (e) => {
+    if (e.target === bioModal) {
+      closeModal();
+    }
+  });
+
+  // Tutup modal dengan tombol Escape
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !bioModal.classList.contains("hidden")) {
+      closeModal();
+    }
+  });
+}
+
+/* =========================================================
+   3. FITUR VALIDASI FORMULIR KONTAK (HALAMAN CONTACT)
+   ========================================================= */
+function initContactForm() {
+  const contactForm = document.getElementById("contact-form");
+  const feedbackMsg = document.getElementById("form-feedback");
+
+  if (!contactForm || !feedbackMsg) return;
+
+  contactForm.addEventListener("submit", (e) => {
     e.preventDefault();
-    successEl.textContent = "";
 
-    const results = Object.keys(fields).map(validateField);
-    const allValid = results.every(Boolean);
+    const nameInput = document.getElementById("name").value.trim();
+    const emailInput = document.getElementById("email").value.trim();
+    const messageInput = document.getElementById("message").value.trim();
 
-    if (!allValid) {
-      const firstInvalid = form.querySelector(".field.invalid input, .field.invalid textarea");
-      if (firstInvalid) firstInvalid.focus();
+    // Regex pola validasi format email
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+    if (!nameInput || !emailInput || !messageInput) {
+      feedbackMsg.style.color = "#e74c3c";
+      feedbackMsg.textContent = "⚠️ Harap isi semua kolom formulir sebelum mengirim!";
       return;
     }
 
-    // Di sini kirim data ke server (fetch) jika sudah ada backend.
-    successEl.textContent = "Terima kasih! Pesan Anda berhasil dikirim.";
-    form.reset();
+    if (!emailPattern.test(emailInput)) {
+      feedbackMsg.style.color = "#e74c3c";
+      feedbackMsg.textContent = "⚠️ Format email tidak valid! Masukkan email yang benar.";
+      return;
+    }
+
+    if (messageInput.length < 10) {
+      feedbackMsg.style.color = "#e74c3c";
+      feedbackMsg.textContent = "⚠️ Pesan minimal 10 karakter.";
+      return;
+    }
+
+    // Jika validasi sukses
+    feedbackMsg.style.color = "#2ecc71";
+    feedbackMsg.textContent = "🎉 Pesan kamu berhasil dikirim! Terima kasih sudah menghubungi kami.";
+
+    contactForm.reset();
   });
 }
