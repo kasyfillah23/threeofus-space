@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /* Data biografi lengkap 3 anggota kelompok */
     const memberData = {
-        afan: {
+        afaan: {
             name: "Zharfan Kasy'fillah",
             nim: "NIM: 25091397156",
             desc: "Project Lead & HTML Architect di ThreeOfUs Space. Bertanggung jawab atas struktur semantik HTML5, arsitektur repositori GitHub, serta penyusunan dokumentasi teknis SRS. Berfokus pada penulisan kode yang rapi, accessible, dan memenuhi standar W3C."
