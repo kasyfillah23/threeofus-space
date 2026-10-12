@@ -81,4 +81,4 @@ Seluruh logika interaksi pada web dikelola secara eksplisit pada file `script.js
 ## 🚀 Cara Menjalankan Proyek Secara Lokal
 *Clone* repositori ini ke komputer lokal kamu:
    ```bash
-   git clone [https://github.com/kasyfillah23/threeofus-space.git](https://github.com/kasyfillah23/threeofus-space.git)
+   git clone https://github.com/kasyfillah23/threeofus-space.git
