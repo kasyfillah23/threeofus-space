@@ -1,6 +1,6 @@
 # ThreeOfUsSpace - Web Profile Interactive 🚀
 
-Website profil kelompok interaktif yang dikembangkan menggunakan HTML5 semantik, CSS3 modern (Flexbox, Grid, & CSS Variables), serta Vanilla JavaScript untuk memenuhi Tugas Proyek UTS Mata Kuliah Pemrograman Web (D4 Manajemen Informatika UNESA).
+Website profil kelompok interaktif ini kami kembangkan menggunakan HTML5 semantik, CSS3 modern (Flexbox, Grid, & CSS Variables), serta Vanilla JavaScript untuk memenuhi Tugas Proyek UTS Mata Kuliah Pemrograman Web (D4 Manajemen Informatika UNESA).
 
 ---
 
@@ -46,6 +46,6 @@ Interaksi dinamis dikelola penuh melalui file `script.js`:
 ---
 
 ## 🚀 Cara Menjalankan Proyek Secara Lokal
-1. *Clone* repositori ini ke komputer lokal kamu:
+*Clone* repositori ini ke komputer lokal kamu:
    ```bash
    git clone [https://github.com/kasyfillah23/threeofus-space.git](https://github.com/kasyfillah23/threeofus-space.git)
