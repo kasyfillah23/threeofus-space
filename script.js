@@ -9,13 +9,11 @@ document.addEventListener("DOMContentLoaded", () => {
   initContactForm();
 });
 
-/* =========================================================
-   1. FITUR DARK / LIGHT MODE TOGGLE (GLOBAL)
-   ========================================================= */
+/* 1. FITUR DARK / LIGHT MODE TOGGLE (GLOBAL) */
 function initThemeToggle() {
   const themeToggleBtn = document.getElementById("theme-toggle");
 
-  // Cek preferensi tema yang tersimpan di localStorage atau system preference
+  /* Cek preferensi tema yang tersimpan di localStorage atau system preference */
   const savedTheme = localStorage.getItem("theme");
   const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
   const isDark = savedTheme === "dark" || (!savedTheme && prefersDark);
@@ -48,9 +46,7 @@ function initThemeToggle() {
   }
 }
 
-/* =========================================================
-   2. FITUR MODAL POP-UP DETAIL BIO (HALAMAN ABOUT)
-   ========================================================= */
+/* 2. FITUR MODAL POP-UP DETAIL BIO (HALAMAN ABOUT) */
 function initTeamModal() {
   const bioModal = document.getElementById("bio-modal");
   const modalName = document.getElementById("modal-name");
@@ -61,7 +57,7 @@ function initTeamModal() {
 
   if (!bioModal || detailBtns.length === 0) return;
 
-  // Data biografi lengkap 3 anggota kelompok
+  /* Data biografi lengkap 3 anggota kelompok */
   const memberData = {
     afaan: {
       name: "Zharfan Kasy'fillah",
@@ -105,14 +101,14 @@ function initTeamModal() {
     closeBtn.addEventListener("click", closeModal);
   }
 
-  // Tutup modal jika area di luar kotak modal diklik
+  /* Tutup modal jika area di luar kotak modal diklik */
   bioModal.addEventListener("click", (e) => {
     if (e.target === bioModal) {
       closeModal();
     }
   });
 
-  // Tutup modal dengan tombol Escape
+  /* Tutup modal dengan tombol Escape */
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && !bioModal.classList.contains("hidden")) {
       closeModal();
@@ -120,9 +116,7 @@ function initTeamModal() {
   });
 }
 
-/* =========================================================
-   3. FITUR VALIDASI FORMULIR KONTAK (HALAMAN CONTACT)
-   ========================================================= */
+/* 3. FITUR VALIDASI FORMULIR KONTAK (HALAMAN CONTACT) */
 function initContactForm() {
   const contactForm = document.getElementById("contact-form");
   const feedbackMsg = document.getElementById("form-feedback");
@@ -136,7 +130,7 @@ function initContactForm() {
     const emailInput = document.getElementById("email").value.trim();
     const messageInput = document.getElementById("message").value.trim();
 
-    // Regex pola validasi format email
+    /* Regex pola validasi format email */
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
     if (!nameInput || !emailInput || !messageInput) {
@@ -157,7 +151,7 @@ function initContactForm() {
       return;
     }
 
-    // Jika validasi sukses
+    /* Jika validasi sukses */
     feedbackMsg.style.color = "#2ecc71";
     feedbackMsg.textContent = "🎉 Pesan kamu berhasil dikirim! Terima kasih sudah menghubungi kami.";
 
